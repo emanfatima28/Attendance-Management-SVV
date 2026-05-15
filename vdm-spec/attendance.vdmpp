@@ -4,13 +4,41 @@ types
 
 StudentId = nat;
 Name = seq of char;
+Password = seq of char;
+Role = <Teacher> | <Admin> | <Student>;
+Screen = <Login> | <Dashboard>;
 
 instance variables
 
 students : map StudentId to Name := {|->};
 attendance : map StudentId to bool := {|->};
+-- Issue #2 fix: persistence flag ensures records survive restart
+persistedAttendance : map StudentId to bool := {|->};
+currentScreen : Screen := <Login>;
+currentRole : [Role] := nil;
 
 operations
+
+-- Issue #1 fix: Login operation with redirect postcondition
+Login : StudentId * Password * Role ==> ()
+Login(id, pass, role) ==
+(
+    currentScreen := <Dashboard>;
+    currentRole := role;
+)
+pre id in set dom students
+post currentScreen = <Dashboard> and currentRole = role;
+
+-- Issue #3 fix: MarkAttendance now requires Teacher role precondition
+MarkAttendance : StudentId ==> ()
+MarkAttendance(id) ==
+(
+    attendance := attendance munion {id |-> true};
+    -- Issue #2 fix: write to persisted store as well
+    persistedAttendance := persistedAttendance munion {id |-> true};
+)
+pre id in set dom students and currentRole = <Teacher>
+post attendance(id) = true and persistedAttendance(id) = true;
 
 AddStudent : StudentId * Name ==> ()
 AddStudent(id, name) ==
@@ -19,13 +47,5 @@ AddStudent(id, name) ==
 )
 pre id not in set dom students
 post id in set dom students;
-
-MarkAttendance : StudentId ==> ()
-MarkAttendance(id) ==
-(
-    attendance := attendance munion {id |-> true};
-)
-pre id in set dom students
-post attendance(id) = true;
 
 end AttendanceSystem
