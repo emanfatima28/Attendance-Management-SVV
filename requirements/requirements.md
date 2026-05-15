@@ -92,3 +92,45 @@
 
 4\. Reports must be generated from stored attendance data.
 
+
+
+\-------
+
+\#Use cases 
+
+
+
+Actors
+
+•	Teacher 
+
+•	Student 
+
+•	Admin 
+
+System States
+
+1\.	Student Registered 
+
+2\.	Attendance Marked 
+
+3\.	Attendance Report Generated 
+
+Inputs
+
+•	Student ID 
+
+•	Course ID 
+
+•	Attendance status 
+
+•	Date 
+
+Outputs
+
+•	Attendance reports 
+
+•	Student attendance percentage
+
+
+
