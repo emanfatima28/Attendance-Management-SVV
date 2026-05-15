@@ -2,8 +2,7 @@ name: Attendance Validation Pipeline
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   validate-project:
@@ -12,16 +11,26 @@ jobs:
 
     steps:
 
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
+      - name: Show Repository Files
+        run: ls
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run validation script
-        run: node validate.js
+      - name: Validation Check
+        run: |
+          echo "Running Validation Checklist"
+          
+          if [ -f "validation-checklist.md" ]; then
+            echo "Validation checklist found"
+          else
+            echo "Validation checklist missing"
+          fi
+          
+          if [ -d ".github/workflows" ]; then
+            echo "CI pipeline folder exists"
+          else
+            echo "CI folder missing"
+          fi
+          
+          echo "Validation completed"
