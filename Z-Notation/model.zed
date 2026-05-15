@@ -1,0 +1,25 @@
+[STUDENT, DATE]
+
+AttendanceSystem
+students : ℙ STUDENT
+attendance : STUDENT ↔ DATE
+where
+attendance ⊆ students × DATE
+
+AddStudent
+Δ AttendanceSystem
+s? : STUDENT
+where
+s? ∉ students
+students' = students ∪ {s?}
+attendance' = attendance
+
+MarkAttendance
+Δ AttendanceSystem
+s? : STUDENT
+d? : DATE
+where
+s? ∈ students
+attendance' = attendance ∪ {(s?, d?)}
+students' = students
+

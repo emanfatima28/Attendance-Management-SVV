@@ -1,0 +1,36 @@
+name: Attendance Validation Pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  validate-project:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Show Repository Files
+        run: ls
+
+      - name: Validation Check
+        run: |
+          echo "Running Validation Checklist"
+          
+          if [ -f "validation-checklist.md" ]; then
+            echo "Validation checklist found"
+          else
+            echo "Validation checklist missing"
+          fi
+          
+          if [ -d ".github/workflows" ]; then
+            echo "CI pipeline folder exists"
+          else
+            echo "CI folder missing"
+          fi
+          
+          echo "Validation completed"
