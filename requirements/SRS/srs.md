@@ -10,9 +10,11 @@ Attendance management system records and manages student attendance digitally
 4. System generates reports
 
 ##Non-Functional Requirements
-1. System should be fast
-2. System should be secure
-3. system should be user friendly
+1. System should respond to user actions within 2 seconds
+2. System should restrict attendance marking to users with Teacher role only
+3. System should be user friendly
+4. System must persist all attendance records to permanent storage — records must survive page refresh and server restart
+5. System must automatically reconnect to the database within 30 seconds of a server restart
 
 
 \-------
