@@ -1,0 +1,31 @@
+class AttendanceSystem
+
+types
+
+StudentId = nat;
+Name = seq of char;
+
+instance variables
+
+students : map StudentId to Name := {|->};
+attendance : map StudentId to bool := {|->};
+
+operations
+
+AddStudent : StudentId * Name ==> ()
+AddStudent(id, name) ==
+(
+    students := students munion {id |-> name};
+)
+pre id not in set dom students
+post id in set dom students;
+
+MarkAttendance : StudentId ==> ()
+MarkAttendance(id) ==
+(
+    attendance := attendance munion {id |-> true};
+)
+pre id in set dom students
+post attendance(id) = true;
+
+end AttendanceSystem
